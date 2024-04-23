@@ -11,9 +11,12 @@
       <section class="privacy">
         <h2>Privacy statement</h2>
         <p>
-        Visits to this page are logged, including details of the visiting IP
-        address and user agent (your browser). The link you enter is NOT recorded
-        or tracked; the result shown is updated in realtime using Javascript.
+	Visits to this page are logged, including details of the visiting IP
+	address and user agent (your browser). The link you enter is NOT
+	recorded or tracked; the result shown is updated in realtime using
+	Javascript. I analyse the results solely for site analysis, bug fixing
+	and other non-invasive purposes. No data is sold on, in any way, shape,
+	or form.
         </p>
       </section>
 
@@ -55,6 +58,12 @@
             var clean_url = url.toString()
             output_el.value = clean_url
             extra_el.innerHTML += "<li>Recognised Twitter/X"
+          } else if (url.hostname === 'www.reddit.com') {
+            url.searchParams.delete('ref')
+            url.searchParams.delete('ref_source')
+            var clean_url = url.toString()
+            output_el.value = clean_url
+            extra_el.innerHTML += "<li>Recognised Twitter/X"
           } else {
             output_el.value = "Unknown link"
           }
@@ -62,7 +71,7 @@
       </script>
       <h2>Disclaimer</h2>
       <p>
-      This is a very primitive version. Currently only twitter.com, x.com and youtu.be links are handled.
+      This is a very primitive version. Currently only twitter.com, x.com, reddit.com, and youtu.be links are handled.
       </p>
     </article>
     <footer>
