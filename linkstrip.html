@@ -1,56 +1,69 @@
-<h1>A simple link stripper</h1>
+<html>
+  <body>
+    <h1>A simple link stripper</h1>
 
-<article>
-  <section class="privacy">
-    <h1>Privacy statement</h1>
-    <p>
-    Visits to this page are logged, including details of the visiting IP
-    address and user agent (your browser). The link you enter is NOT recorded
-    or tracked; the result shown is updated in realtime using Javascript.
-    </p>
-  </section>
+    <article>
+      <p>
+      This tool removes tracking information found in URLs. You can safely
+      paste in a link here in order to copy back a cleaned version of the
+      link.
+      </p>
+      <section class="privacy">
+        <h2>Privacy statement</h2>
+        <p>
+        Visits to this page are logged, including details of the visiting IP
+        address and user agent (your browser). The link you enter is NOT recorded
+        or tracked; the result shown is updated in realtime using Javascript.
+        </p>
+      </section>
 
-  <section class="linkstrip">
-    <h2>Input the link</h2>
-    <input id="linkin" name="linkin" type="text" oninput="update(this)" style="width: 500px;">
+      <section class="linkstrip">
+        <h2>Input the link</h2>
+        <input id="linkin" name="linkin" type="text" oninput="update(this)" style="width: 500px;">
 
-    <h2>Cleaned link</h2>
-    <input id="cleanlink" name="cleanlink" type="text" disabled=1 style="width: 500px;">
-    <button onclick="Copy()">Copy to clipboard</button>
+        <h2>Cleaned link</h2>
+        <input id="cleanlink" name="cleanlink" type="text" disabled=1 style="width: 500px;">
+        <button onclick="Copy()">Copy to clipboard</button>
 
-    <h2>Extra info</h2>
-    <ul id="extra">
-    </ul>
-  </section>
+        <h2>Extra info</h2>
+        <ul id="extra">
+        </ul>
+      </section>
 
-  <script>
-    function Copy() {
-      var output_el = document.getElementById("cleanlink")
-      navigator.clipboard.writeText(output_el.value)
-      document.execCommand("copy");
-    }
+      <script>
+        function Copy() {
+          var output_el = document.getElementById("cleanlink")
+          navigator.clipboard.writeText(output_el.value)
+          document.execCommand("copy");
+        }
 
-    function update(input) {
-      var input_el = document.getElementById("linkin")
-      var output_el = document.getElementById("cleanlink")
-      var extra_el = document.getElementById("extra")
-      var url = new URL(input_el.value)
-      extra_el.innerHTML = ""
+        function update(input) {
+          var input_el = document.getElementById("linkin")
+          var output_el = document.getElementById("cleanlink")
+          var extra_el = document.getElementById("extra")
+          var url = new URL(input_el.value)
+          extra_el.innerHTML = ""
 
-      if (url.hostname === 'youtu.be') {
-        url.searchParams.delete('si')
-        var clean_url = url.toString()
-        output_el.value = clean_url
-        extra_el.innerHTML += "<li>Recognised shortened YouTube"
-      } else if (url.hostname === 'twitter.com' || url.hostname === 'x.com') {
-        url.searchParams.delete('s')
-        url.searchParams.delete('t')
-        var clean_url = url.toString()
-        output_el.value = clean_url
-        extra_el.innerHTML += "<li>Recognised Twitter/X"
-      } else {
-        output_el.value = "Unknown link"
-      }
-    }
-  </script>
-
+          if (url.hostname === 'youtu.be') {
+            url.searchParams.delete('si')
+            var clean_url = url.toString()
+            output_el.value = clean_url
+            extra_el.innerHTML += "<li>Recognised shortened YouTube"
+          } else if (url.hostname === 'twitter.com' || url.hostname === 'x.com') {
+            url.searchParams.delete('s')
+            url.searchParams.delete('t')
+            var clean_url = url.toString()
+            output_el.value = clean_url
+            extra_el.innerHTML += "<li>Recognised Twitter/X"
+          } else {
+            output_el.value = "Unknown link"
+          }
+        }
+      </script>
+    </article>
+    <footer>
+      This tool is copyright Matt Peperell 2024 and is published under a MIT license.
+      The source code is available at <a href="https://github.com/mattpep/jstoys">https://github.com/mattpep/jstoys</a>. Pull requests welcome.
+    </footer>
+  </body>
+</html>
