@@ -1,0 +1,83 @@
+<h1>A collection of Rubik's tools</h1>
+
+<h2>starting move</h2>
+<input id="rev-in" name="rev-in" type="text" oninput="update(this)">
+<h2>Move reversal</h2>
+<input name="rev-out" type="text" disabled=1>
+<h2>Left-right reflect</h2>
+<input name="lrr-out" type="text" disabled=1>
+
+<script>
+  const input = document.getElementById('rev-in')
+
+
+  function str_to_moves(str) {
+    let moves = [];
+    for (ptr = 0 ; ptr < str.length ; ) {
+      var this_move = str[ptr++]
+      if (str[ptr] === '2' || str[ptr] === "'" ){
+        this_move += str[ptr++]
+      }
+      moves.push(this_move)
+    }
+    return moves
+  }
+
+// reverse a sequence
+function reverse(move_str) {
+  var moves = str_to_moves(move_str)
+  var result = []
+  for (let i = moves.length - 1 ; i >= 0 ; i--) {
+    result.push(invert(moves[i]))
+  }
+  return result
+}
+
+// invert a single move
+function invert(move) {
+  if (move.length === 1) {
+    return move + "'"
+  } else if (move.length === 2 && move[1] === '2') {
+    return move
+  } else if (move.length === 2 && move[1] === "'") {
+    return move[0]
+  } else {
+    return 'X'
+  }
+}
+
+function replaceAt(s, i, c) {
+    const arr = [...s];  // Convert string to array
+    arr[i] = c;          // Set char c at pos i
+    return arr.join(''); // Back to string
+}
+
+function lr_reflect(move_str) {
+  var moves = str_to_moves(move_str)
+  var result = []
+  for (let i = 0 ; i < moves.length  ;  i++) {
+    move = moves[i]
+    if (move[0] === 'L')
+      move = replaceAt(move, 0, 'R')
+    else if (move[0] === 'R')
+      move = replaceAt(move, 0, 'L')
+
+    result.push(invert(move))
+      invert(moves[i])
+  }
+  return result
+}
+
+
+  function update(input) {
+  //var input = document.getElementById('rev-in')
+    var rev = reverse(input.value).join('')
+    const output = document.querySelector('input[name="rev-out"]')
+    output.value = rev
+
+    var lrr = lr_reflect(input.value).join('')
+    const lrr_out = document.querySelector('input[name="lrr-out"]')
+    lrr_out.value = lrr
+  }
+</script>
+
