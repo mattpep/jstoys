@@ -44,7 +44,12 @@
           var input_el = document.getElementById("linkin")
           var output_el = document.getElementById("cleanlink")
           var extra_el = document.getElementById("extra")
-          var url = new URL(input_el.value)
+          try {
+            var url = new URL(input_el.value)
+          } catch (e) {
+            output_el.value = "Could not parse URL. Maybe invalid, or missing the http/https from the start?"
+            return
+          }
           extra_el.innerHTML = ""
 
           if (url.hostname === 'youtu.be' || url.hostname === 'www.youtube.com') {
@@ -65,7 +70,7 @@
             output_el.value = clean_url
             extra_el.innerHTML += "<li>Recognised Twitter/X"
           } else {
-            output_el.value = "Unknown link"
+            output_el.value = "Unknown hostname in URL"
           }
         }
       </script>
