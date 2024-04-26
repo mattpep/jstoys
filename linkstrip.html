@@ -47,7 +47,7 @@
           var url = new URL(input_el.value)
           extra_el.innerHTML = ""
 
-          if (url.hostname === 'youtu.be') {
+          if (url.hostname === 'youtu.be' || url.hostname === 'www.youtube.com') {
             url.searchParams.delete('si')
             var clean_url = url.toString()
             output_el.value = clean_url
@@ -71,7 +71,7 @@
       </script>
       <h2>Disclaimer</h2>
       <p>
-      This is a very primitive version. Currently only twitter.com, x.com, reddit.com, and youtu.be links are handled.
+      This is a very primitive version. Currently only twitter.com, x.com, reddit.com, and youtu.be/www.youtube.com links are handled.
       </p>
     </article>
     <footer>
