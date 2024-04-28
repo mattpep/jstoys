@@ -51,7 +51,14 @@
             return
           }
           extra_el.innerHTML = ""
-
+          if ( url.searchParams.has('utm_source') || url.searchParams.has('utm_medium') || url.searchParams.has('utm_campaign') || url.searchParams.has('utm_term') || url.searchParams.has('utm_content') ) {
+            url.searchParams.delete('utm_source')
+            url.searchParams.delete('utm_medium')
+            url.searchParams.delete('utm_campaign')
+            url.searchParams.delete('utm_term')
+            url.searchParams.delete('utm_content')
+            extra_el.innerHTML += "<li>Removed UTM tracking info"
+          }
           if (url.hostname === 'youtu.be' || url.hostname === 'www.youtube.com') {
             url.searchParams.delete('si')
             var clean_url = url.toString()
@@ -70,7 +77,7 @@
             output_el.value = clean_url
             extra_el.innerHTML += "<li>Recognised Twitter/X"
           } else {
-            output_el.value = "Unknown hostname in URL"
+            extra_el.innerHTML += "<li>Unknown hostname, but cleaning anyway"
           }
         }
       </script>
